@@ -27,6 +27,16 @@ namespace dotnet_webapi_exercise_001
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(options => {
+                options.AddPolicy("AppPolicy", builder => {
+                    builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
+            services.AddMvc();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,6 +57,8 @@ namespace dotnet_webapi_exercise_001
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AppPolicy");
 
             app.UseAuthorization();
 
