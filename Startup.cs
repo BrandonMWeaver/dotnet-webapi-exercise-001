@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
+using dotnet_webapi_exercise_001.Data;
 
 namespace dotnet_webapi_exercise_001
 {
@@ -26,6 +29,9 @@ namespace dotnet_webapi_exercise_001
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Data.AppContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("AppConnection")));
+
+            services.AddScoped<IAppRepo, AppRepo>();
 
             services.AddCors(options => {
                 options.AddPolicy("AppPolicy", builder => {
@@ -36,7 +42,6 @@ namespace dotnet_webapi_exercise_001
                 });
             });
 
-            services.AddMvc();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
