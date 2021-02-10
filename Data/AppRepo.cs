@@ -23,5 +23,11 @@ namespace dotnet_webapi_exercise_001.Data
         {
             return this._context.TestModels.Where(tm => tm.Id == id).First();
         }
+
+        public void CreateTestModel(TestModel testModel)
+        {
+            this._context.TestModels.Add(testModel);
+            this._context.SaveChanges();
+        }
     }
 }

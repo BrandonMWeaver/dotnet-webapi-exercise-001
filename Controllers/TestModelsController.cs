@@ -29,5 +29,12 @@ namespace dotnet_webapi_exercise_001.Controllers
         {
             return Ok(this._repo.GetTestModelById(id));
         }
+
+        [HttpPost]
+        public ActionResult CreateTestModel(TestModel testModel)
+        {
+            this._repo.CreateTestModel(testModel);
+            return RedirectToAction("GetAllTestModels");
+        }
     }
 }
