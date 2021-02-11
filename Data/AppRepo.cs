@@ -29,5 +29,11 @@ namespace dotnet_webapi_exercise_001.Data
             this._context.TestModels.Add(testModel);
             this._context.SaveChanges();
         }
+
+        public void DeleteTestModel(int id)
+        {
+            this._context.TestModels.Remove(this._context.TestModels.Where(tm => tm.Id == id).First());
+            this._context.SaveChanges();
+        }
     }
 }

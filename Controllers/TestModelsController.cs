@@ -36,5 +36,12 @@ namespace dotnet_webapi_exercise_001.Controllers
             this._repo.CreateTestModel(testModel);
             return RedirectToAction("GetAllTestModels");
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteTestModel(int id)
+        {
+            this._repo.DeleteTestModel(id);
+            return RedirectToAction("GetAllTestModels");
+        }
     }
 }
