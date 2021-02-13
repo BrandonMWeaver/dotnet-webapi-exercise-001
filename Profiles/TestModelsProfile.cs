@@ -10,6 +10,7 @@ namespace dotnet_webapi_exercise_001.Profiles
         public TestmodelsProfile()
         {
             CreateMap<TestModel, TestModelReadDto>();
+            CreateMap<TestModelCreateDto, TestModel>();
         }
     }
 }

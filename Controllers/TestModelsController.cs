@@ -30,7 +30,7 @@ namespace dotnet_webapi_exercise_001.Controllers
             return Ok(this._mapper.Map<IEnumerable<TestModelReadDto>>(testModels));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTestModelById")]
         public ActionResult<TestModelReadDto> GetTestModelById(int id)
         {
             TestModel testModel = this._repo.GetTestModelById(id);
@@ -41,10 +41,16 @@ namespace dotnet_webapi_exercise_001.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTestModel(TestModel testModel)
+        public ActionResult<TestModelReadDto> CreateTestModel(TestModelCreateDto testModelCreateDto)
         {
+            TestModel testModel = this._mapper.Map<TestModel>(testModelCreateDto);
+
             this._repo.CreateTestModel(testModel);
-            return RedirectToAction("GetAllTestModels");
+            this._repo.SaveChanges();
+            
+            TestModelReadDto testModelReadDto = this._mapper.Map<TestModelReadDto>(testModel);
+
+            return CreatedAtRoute(nameof(GetTestModelById), new { Id = testModelReadDto.Id }, testModelReadDto);
         }
 
         [HttpDelete("{id}")]

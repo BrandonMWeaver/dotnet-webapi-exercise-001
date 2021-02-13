@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,11 @@ namespace dotnet_webapi_exercise_001.Data
             this._context = context;
         }
 
+        public bool SaveChanges()
+        {
+            return this._context.SaveChanges() >= 0;
+        }
+
         public IEnumerable<TestModel> GetAllTestModels()
         {
             return this._context.TestModels;
@@ -21,19 +27,22 @@ namespace dotnet_webapi_exercise_001.Data
 
         public TestModel GetTestModelById(int id)
         {
-            return this._context.TestModels.Where(tm => tm.Id == id).First();
+            return this._context.TestModels.FirstOrDefault(tm => tm.Id == id);
         }
 
         public void CreateTestModel(TestModel testModel)
         {
+            if (testModel == null)
+                throw new ArgumentNullException(nameof(testModel));
+
             this._context.TestModels.Add(testModel);
-            this._context.SaveChanges();
         }
 
         public void DeleteTestModel(int id)
         {
-            this._context.TestModels.Remove(this._context.TestModels.Where(tm => tm.Id == id).First());
-            this._context.SaveChanges();
+            TestModel testModel = this._context.TestModels.FirstOrDefault(tm => tm.Id == id);
+
+            this._context.TestModels.Remove(testModel);
         }
     }
 }

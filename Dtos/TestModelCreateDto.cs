@@ -1,6 +1,6 @@
 namespace dotnet_webapi_exercise_001.Dtos
 {
-    public class TestModelReadDto
+    public class TestModelCreateDto
     {
         public int Id { get; set; }
 
