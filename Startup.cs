@@ -31,6 +31,8 @@ namespace dotnet_webapi_exercise_001
         {
             services.AddDbContext<Data.AppContext>(opt => opt.UseSqlite(Configuration.GetConnectionString("AppConnection")));
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IAppRepo, AppRepo>();
 
             services.AddCors(options => {
